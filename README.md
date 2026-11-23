@@ -8,7 +8,7 @@ No Windows PC, no VPS, no MT5 terminal left running, no Python, and no broker pa
 - **Read-only server URL:** `https://api.fivesocket.com/mcp/read`
 - **Website and setup guide:** https://fivesocket.com/mcp
 - **Docs:** https://docs.fivesocket.com/mcp
-- **Free trial:** 5 days, no card required. Start at https://fivesocket.com
+- **Trial:** setting up is free. Using it starts a 7-day free trial, card required. Cancel anytime. Start at https://fivesocket.com
 
 > This repository holds setup instructions and client configs for the hosted FiveSocket MT5 MCP server. The server itself runs at the URLs above; there is nothing to install or build.
 
@@ -29,7 +29,7 @@ A longer comparison: https://fivesocket.com/mt5-mcp-server-comparison
 
 ## Connect in about a minute
 
-1. Start a free trial at https://fivesocket.com and link your MT5 account (login, password and server name) in the browser. The password goes straight to FiveSocket over HTTPS and is never shown to your assistant.
+1. Sign up at https://fivesocket.com and link your MT5 account (login, password and server name) in the browser. The password goes straight to FiveSocket over HTTPS and is never shown to your assistant.
 2. Add the server to your assistant using one of the guides below.
 3. Sign in and approve what the assistant may do: see your accounts, read account data, and (only if you allow it) trade.
 4. Ask: "What's my balance?"
@@ -126,7 +126,7 @@ Use the Streamable HTTP URL `https://api.fivesocket.com/mcp` (or `https://api.fi
 
 **Does it need Windows?** No. FiveSocket runs the MT5 terminal for you.
 
-**Is there a free trial?** Yes, 5 days with no card.
+**Is there a free trial?** Yes. Setting up is free; using it starts a 7-day free trial, card required. Cancel anytime.
 
 **Is there a REST API too?** Yes: https://docs.fivesocket.com
 
