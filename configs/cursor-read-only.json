@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "fivesocket-read": {
+      "url": "https://api.fivesocket.com/mcp/read"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Account, billing or broker connection help
+    url: https://fivesocket.com
+    about: For anything about your FiveSocket account, email hello@fivesocket.com.
+  - name: Documentation
+    url: https://docs.fivesocket.com
+    about: REST API reference and MCP setup.

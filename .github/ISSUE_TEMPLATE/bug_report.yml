@@ -1,0 +1,30 @@
+name: Problem with a config or example
+description: Something in this repository does not work as documented.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Never paste an API key, an OAuth token, or MT5 login details in an issue.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Where
+      options:
+        - MCP client config (Claude, ChatGPT, Cursor, VS Code, other)
+        - Python example
+        - TypeScript example
+        - curl example
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: Steps, the command you ran, and the output. Include the requestId from any error.
+    validations:
+      required: true
+  - type: input
+    id: client
+    attributes:
+      label: Client and version
+      placeholder: Cursor 2.1, Node 22.18, Python 3.12, ...

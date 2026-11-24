@@ -1,0 +1,8 @@
+{
+  "servers": {
+    "fivesocket-read": {
+      "type": "http",
+      "url": "https://api.fivesocket.com/mcp/read"
+    }
+  }
+}

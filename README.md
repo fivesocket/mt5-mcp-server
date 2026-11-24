@@ -8,9 +8,19 @@ No Windows PC, no VPS, no MT5 terminal left running, no Python, and no broker pa
 - **Read-only server URL:** `https://api.fivesocket.com/mcp/read`
 - **Website and setup guide:** https://fivesocket.com/mcp
 - **Docs:** https://docs.fivesocket.com/mcp
-- **Trial:** setting up is free. Using it starts a 7-day free trial, card required. Cancel anytime. Start at https://fivesocket.com
+- **REST API:** `https://api.fivesocket.com/v1`, reference at https://docs.fivesocket.com
+- **Pricing:** Starter $9.99 a month for 1 MT5 account, Plus $29.99 for 5, Scale $79.99 for 20. Setting up is free; using it starts a 7-day free trial, card required. Cancel anytime. https://fivesocket.com/pricing
 
-> This repository holds setup instructions and client configs for the hosted FiveSocket MT5 MCP server. The server itself runs at the URLs above; there is nothing to install or build.
+> The server runs at the URLs above, so there is nothing to install or build to use it from an assistant. This repository holds client configs for every MCP client and small, runnable examples that call the same accounts from your own code over the REST API.
+
+## What's in this repo
+
+| Path | What it is |
+|---|---|
+| [`configs/`](configs) | MCP configs for Claude Code, Cursor and VS Code, full access and read-only |
+| [`examples/python/`](examples/python) | Python client (standard library only), plus scripts to read an account and place an order |
+| [`examples/typescript/`](examples/typescript) | TypeScript client using `fetch`, runnable with Node 22.18+ or Bun, no dependencies |
+| [`examples/curl/`](examples/curl) | Shell scripts: read an account, place an order, and walk the MCP OAuth discovery |
 
 ## Why a hosted MT5 MCP server
 
@@ -34,13 +44,13 @@ A longer comparison: https://fivesocket.com/mt5-mcp-server-comparison
 3. Sign in and approve what the assistant may do: see your accounts, read account data, and (only if you allow it) trade.
 4. Ask: "What's my balance?"
 
-### Claude (claude.ai, Desktop, iPhone and Android)
+### Claude (claude.ai, Claude Desktop, iPhone and Android)
 
 **Read-only, one click:** open https://claude.ai/directory/fivesocket-mt5 (or search for FiveSocket under Settings → Connectors) and choose **Connect**.
 
 **With trading:** Settings → Connectors → **Add custom connector**, name it FiveSocket, paste `https://api.fivesocket.com/mcp`, and sign in. Custom connectors depend on your Claude plan.
 
-Connectors you add on claude.ai or in Claude Desktop are also available in the Claude mobile apps.
+Claude Desktop uses the same Settings → Connectors screen; there is no `claude_desktop_config.json` entry to write, because FiveSocket is a remote server with OAuth sign-in. Connectors you add on claude.ai or in Claude Desktop are also available in the Claude mobile apps.
 
 Guide: https://fivesocket.com/connect-mt5-to-claude
 
@@ -52,13 +62,19 @@ claude mcp add --transport http fivesocket https://api.fivesocket.com/mcp
 
 Then run `/mcp` inside Claude Code and choose **fivesocket** to sign in.
 
+Read-only ([`configs/claude-code-read-only.sh`](configs/claude-code-read-only.sh)):
+
+```sh
+claude mcp add --transport http fivesocket-read https://api.fivesocket.com/mcp/read
+```
+
 ### ChatGPT
 
 1. Settings → Apps & Connectors → Advanced → turn on **Developer mode**.
 2. Back in Apps & Connectors choose **Create**, name it FiveSocket, paste `https://api.fivesocket.com/mcp` as the MCP server URL, and choose **OAuth**.
 3. Sign in to FiveSocket when asked.
 
-Developer mode availability depends on your ChatGPT plan, and a workspace admin may need to allow custom connectors.
+Developer mode availability depends on your ChatGPT plan, and a workspace admin may need to allow custom connectors. For a read-only connection, paste `https://api.fivesocket.com/mcp/read` instead.
 
 Guide: https://fivesocket.com/connect-mt5-to-chatgpt
 
@@ -76,6 +92,8 @@ Add this to `~/.cursor/mcp.json` (also in [`configs/cursor.json`](configs/cursor
 }
 ```
 
+Read-only: [`configs/cursor-read-only.json`](configs/cursor-read-only.json).
+
 ### VS Code
 
 Add this to `.vscode/mcp.json` (also in [`configs/vscode.json`](configs/vscode.json)):
@@ -91,11 +109,13 @@ Add this to `.vscode/mcp.json` (also in [`configs/vscode.json`](configs/vscode.j
 }
 ```
 
+Read-only: [`configs/vscode-read-only.json`](configs/vscode-read-only.json).
+
 Guide for Cursor and VS Code: https://fivesocket.com/connect-mt5-to-cursor
 
 ### Any other MCP client
 
-Use the Streamable HTTP URL `https://api.fivesocket.com/mcp` (or `https://api.fivesocket.com/mcp/read` for read-only access). The client must support OAuth sign-in for remote MCP servers.
+Use the Streamable HTTP URL `https://api.fivesocket.com/mcp` (or `https://api.fivesocket.com/mcp/read` for read-only access). The client must support OAuth sign-in for remote MCP servers. [`examples/curl/mcp-discovery.sh`](examples/curl/mcp-discovery.sh) shows the discovery a client performs: a `401` with `WWW-Authenticate`, the protected-resource metadata, then the authorization-server metadata (dynamic client registration, OAuth 2.1 with S256 PKCE).
 
 ## What you can ask
 
@@ -108,9 +128,44 @@ Use the Streamable HTTP URL `https://api.fivesocket.com/mcp` (or `https://api.fi
 
 ## Tools
 
-**Read tools** (`/mcp` and `/mcp/read`): `list_connected_accounts`, `get_account_balance`, `get_open_positions`, `get_account_snapshot`, `list_closed_trades`, `list_deals`, `list_historical_orders`, `get_candles`, `get_symbol_specifications`, `export_history_page`.
+**Read tools** (`/mcp` and `/mcp/read`): `list_connected_accounts`, `get_account_balance`, `get_open_positions`, `get_account_snapshot`, `list_closed_trades`, `list_deals`, `list_historical_orders`, `get_candles`, `get_symbol_specifications`, `export_history_page`, `prop_status`, `run_backtest`.
 
 **Trading tools** (`/mcp` only, and only after you allow trading): `get_execution_configuration`, `configure_execution`, `disable_execution`, `get_execution_capabilities`, `list_working_orders`, `get_order_status`, `get_executable_symbols`, `submit_order`, `modify_order`, `cancel_order`, `modify_position_protection`, `close_position`, `reconcile_execution_command`.
+
+Your assistant sees only the tools your approved scopes allow. Full descriptions: https://docs.fivesocket.com/mcp
+
+## Use it from your own code (REST API)
+
+The same accounts are available over a REST API with an API key, for scripts, dashboards, journals and bots. Create a key in the FiveSocket dashboard with the smallest set of scopes you need (`accounts:read` and `data:read` for reading; add `trading:execute` only to trade).
+
+```sh
+export FIVESOCKET_KEY=mt5_live_...
+
+curl https://api.fivesocket.com/v1/accounts -H "Authorization: Bearer $FIVESOCKET_KEY"
+curl https://api.fivesocket.com/v1/accounts/<accountId>/balance -H "Authorization: Bearer $FIVESOCKET_KEY"
+```
+
+Runnable examples, each printing balance, open positions, last week's closed trades and recent H1 candles:
+
+```sh
+cd examples/python && python3 read_account.py
+cd examples/typescript && node read-account.ts
+cd examples/curl && ./read-account.sh
+```
+
+Each folder also has a `place-order` example. It places a real market order, so it needs a key with `trading:execute`, an account linked with its trading password, and execution enabled for that account with the symbol on its allowlist. Try it on a demo account first.
+
+| Endpoint | Returns |
+|---|---|
+| `GET /v1/accounts` | Linked accounts and their status |
+| `GET /v1/accounts/{id}/balance` | Balance, equity, margin, free margin, leverage, currency |
+| `GET /v1/accounts/{id}/positions` | Open positions with SL, TP, swap and profit |
+| `GET /v1/accounts/{id}/trades?from=&to=` | Closed deals, cursor-paginated (`to` is required) |
+| `GET /v1/accounts/{id}/candles?symbol=&timeframe=&count=` | Completed broker candles, M1 to D1 |
+| `GET /v1/accounts/{id}/snapshot` | Balance, positions and recent trades in one call |
+| `POST /v1/accounts/{id}/execution/orders` | Submit an order (needs `trading:execute` and an execution policy) |
+
+Errors share one envelope, `{"error": {"code", "message", "requestId"}}`. `202 account_warming`, `429` and `503` carry `Retry-After`; the example clients honour it. Full reference: https://docs.fivesocket.com
 
 ## Safety
 
@@ -128,7 +183,9 @@ Use the Streamable HTTP URL `https://api.fivesocket.com/mcp` (or `https://api.fi
 
 **Is there a free trial?** Yes. Setting up is free; using it starts a 7-day free trial, card required. Cancel anytime.
 
-**Is there a REST API too?** Yes: https://docs.fivesocket.com
+**Is there a REST API too?** Yes. See [Use it from your own code](#use-it-from-your-own-code-rest-api) and https://docs.fivesocket.com
+
+**Is it free?** No. It is a paid hosted service with a 7-day free trial (card required). The code in this repository is MIT licensed.
 
 ## Links
 
@@ -136,6 +193,10 @@ Use the Streamable HTTP URL `https://api.fivesocket.com/mcp` (or `https://api.fi
 - MT5 MCP server guide: https://fivesocket.com/mcp
 - Documentation: https://docs.fivesocket.com
 - Official MCP Registry: `com.fivesocket/mt5`
-- Support: hello@fivesocket.com
+- Support: hello@fivesocket.com, or open an issue in this repository
+
+## License
+
+The configs and examples in this repository are released under the [MIT License](LICENSE). The FiveSocket service is a hosted product with its own terms: https://fivesocket.com
 
 FiveSocket is not affiliated with MetaQuotes. MetaTrader 5 is a trademark of MetaQuotes Ltd.
