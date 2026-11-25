@@ -1,5 +1,7 @@
 # MT5 MCP Server: connect MetaTrader 5 to Claude, ChatGPT and Cursor
 
+[![FiveSocket MT5 MCP connector](https://glama.ai/mcp/connectors/com.fivesocket/mt5/badges/score.svg)](https://glama.ai/mcp/connectors/com.fivesocket/mt5)
+
 **FiveSocket is a hosted MT5 MCP server.** Link your MetaTrader 5 account once in the browser, then ask Claude, ChatGPT, Cursor or any MCP client about your balance, positions, trade history and charts. With your permission, it can also place trades.
 
 No Windows PC, no VPS, no MT5 terminal left running, no Python, and no broker password in a config file.
@@ -9,7 +11,7 @@ No Windows PC, no VPS, no MT5 terminal left running, no Python, and no broker pa
 - **Website and setup guide:** https://fivesocket.com/mcp
 - **Docs:** https://docs.fivesocket.com/mcp
 - **REST API:** `https://api.fivesocket.com/v1`, reference at https://docs.fivesocket.com
-- **Pricing:** Starter $9.99 a month for 1 MT5 account, Plus $29.99 for 5, Scale $79.99 for 20. Setting up is free; using it starts a 7-day free trial, card required. Cancel anytime. https://fivesocket.com/pricing
+- **Pricing:** Starter $9.99 a month for 1 MT5 account, Plus $29.99 for 5, Scale $79.99 for 20. Link your MT5 account and try it free, no card: 24 hours or 100 calls, whichever comes first. Then a 7-day free trial, card required. Cancel anytime. https://fivesocket.com/pricing
 
 > The server runs at the URLs above, so there is nothing to install or build to use it from an assistant. This repository holds client configs for every MCP client and small, runnable examples that call the same accounts from your own code over the REST API.
 
@@ -181,7 +183,7 @@ Errors share one envelope, `{"error": {"code", "message", "requestId"}}`. `202 a
 
 **Does it need Windows?** No. FiveSocket runs the MT5 terminal for you.
 
-**Is there a free trial?** Yes. Setting up is free; using it starts a 7-day free trial, card required. Cancel anytime.
+**Is there a free trial?** Yes. Link your MT5 account and try it free, no card: 24 hours or 100 calls, whichever comes first. Then a 7-day free trial, card required. Cancel anytime.
 
 **Is there a REST API too?** Yes. See [Use it from your own code](#use-it-from-your-own-code-rest-api) and https://docs.fivesocket.com
 
