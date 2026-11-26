@@ -24,3 +24,5 @@ Add `"--read-only"` to `args` for account data only, with no trading tools.
 Clients that support remote MCP servers (Claude on the web, ChatGPT, Claude Code, Cursor) can skip this package and add `https://api.fivesocket.com/mcp` directly. Setup for each client: https://fivesocket.com/mcp
 
 Pricing: https://fivesocket.com/pricing · Docs: https://docs.fivesocket.com/mcp
+
+<!-- mcp-name: com.fivesocket/mt5 -->

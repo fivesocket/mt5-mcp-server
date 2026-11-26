@@ -1,6 +1,7 @@
 {
   "name": "fivesocket-mt5-mcp",
-  "version": "1.0.1",
+  "version": "1.0.2",
+  "mcpName": "com.fivesocket/mt5",
   "description": "MT5 MCP server for Claude Desktop, Cursor, VS Code and any stdio MCP client: connects a MetaTrader 5 account through FiveSocket's hosted MT5 MCP server with OAuth sign-in, no Windows, terminal or broker password in config.",
   "type": "module",
   "bin": {
