@@ -15,6 +15,15 @@ No Windows PC, no VPS, no MT5 terminal left running, no Python, and no broker pa
 
 > The server runs at the URLs above, so there is nothing to install or build to use it from an assistant. This repository holds client configs for every MCP client and small, runnable examples that call the same accounts from your own code over the REST API.
 
+## Install as a local (stdio) MCP server
+
+For clients that only run local MCP servers, the connector packages start the same hosted server over stdio and open your browser to sign in:
+
+- npm: [`fivesocket-mt5-mcp`](https://www.npmjs.com/package/fivesocket-mt5-mcp): `"command": "npx", "args": ["-y", "fivesocket-mt5-mcp"]`
+- PyPI: [`fivesocket-mt5-mcp`](https://pypi.org/project/fivesocket-mt5-mcp/): `"command": "uvx", "args": ["fivesocket-mt5-mcp"]` (needs Node.js 20+)
+
+Add `--read-only` for account data only. Source: [`npm/`](npm) and [`python/`](python).
+
 ## What's in this repo
 
 | Path | What it is |

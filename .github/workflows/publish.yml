@@ -1,0 +1,45 @@
+name: Publish connector packages
+
+on:
+    push:
+        tags:
+            - "v*"
+    workflow_dispatch:
+
+permissions:
+    contents: read
+
+jobs:
+    npm:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            id-token: write
+        defaults:
+            run:
+                working-directory: npm
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 24
+                  registry-url: https://registry.npmjs.org
+            - run: npm install -g npm@latest
+            - run: npm ci
+            - run: npm run build
+            - run: npm publish --provenance --access public
+
+    pypi:
+        runs-on: ubuntu-latest
+        environment: pypi
+        permissions:
+            contents: read
+            id-token: write
+        steps:
+            - uses: actions/checkout@v4
+            - uses: astral-sh/setup-uv@v6
+            - run: uv build
+              working-directory: python
+            - uses: pypa/gh-action-pypi-publish@release/v1
+              with:
+                  packages-dir: python/dist

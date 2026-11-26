@@ -1,0 +1,51 @@
+{
+  "name": "fivesocket-mt5-mcp",
+  "version": "1.0.0",
+  "description": "MT5 MCP server for Claude Desktop, Cursor, VS Code and any stdio MCP client: connects a MetaTrader 5 account through FiveSocket's hosted MT5 MCP server with OAuth sign-in, no Windows, terminal or broker password in config.",
+  "type": "module",
+  "bin": {
+    "fivesocket-mt5-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "mcp-remote": "0.16.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "mt5",
+    "mt5-mcp",
+    "metatrader",
+    "metatrader5",
+    "metatrader-5",
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "claude",
+    "cursor",
+    "forex",
+    "trading",
+    "prop-firm"
+  ],
+  "homepage": "https://fivesocket.com/mcp",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fivesocket/mt5-mcp-server.git",
+    "directory": "npm"
+  },
+  "bugs": "https://github.com/fivesocket/mt5-mcp-server/issues",
+  "license": "MIT",
+  "author": "FiveSocket (https://fivesocket.com)"
+}

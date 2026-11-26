@@ -1,0 +1,33 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "fivesocket-mt5-mcp"
+version = "1.0.0"
+description = "MT5 MCP server for Claude Desktop, Cursor, VS Code and any stdio MCP client: connects a MetaTrader 5 account through FiveSocket's hosted MT5 MCP server with OAuth sign-in, no Windows or MT5 terminal."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.9"
+authors = [{ name = "FiveSocket", email = "hello@fivesocket.com" }]
+keywords = ["mt5", "mt5-mcp", "metatrader", "metatrader5", "mcp", "mcp-server", "model-context-protocol", "claude", "cursor", "forex", "trading"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Financial and Insurance Industry",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Office/Business :: Financial :: Investment",
+]
+
+[project.urls]
+Homepage = "https://fivesocket.com/mcp"
+Documentation = "https://docs.fivesocket.com/mcp"
+Repository = "https://github.com/fivesocket/mt5-mcp-server"
+Issues = "https://github.com/fivesocket/mt5-mcp-server/issues"
+
+[project.scripts]
+fivesocket-mt5-mcp = "fivesocket_mt5_mcp:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/fivesocket_mt5_mcp"]
