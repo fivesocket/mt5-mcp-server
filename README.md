@@ -10,8 +10,9 @@ No Windows PC, no VPS, no MT5 terminal left running, no Python, and no broker pa
 - **Read-only server URL:** `https://api.fivesocket.com/mcp/read`
 - **Website and setup guide:** https://fivesocket.com/mcp
 - **Docs:** https://docs.fivesocket.com/mcp
+- **Glama:** [server listing](https://glama.ai/mcp/servers/fivesocket/mt5-mcp-server) and [hosted connector](https://glama.ai/mcp/connectors/com.fivesocket/mt5)
 - **REST API:** `https://api.fivesocket.com/v1`, reference at https://docs.fivesocket.com
-- **Pricing:** Starter $9.99 a month for 1 MT5 account, Plus $29.99 for 5, Scale $79.99 for 20. Link your MT5 account and try it free, no card: 24 hours or 100 calls, whichever comes first. Then a 7-day free trial, card required. Cancel anytime. https://fivesocket.com/pricing
+- **Pricing:** Starter $9.99 a month for 1 MT5 account, Prop $19.99 for 3, Plus $29.99 for 5, Scale $79.99 for 20. Link your MT5 account and try it free, no card: 24 hours or 100 calls, whichever comes first. Then a 7-day free trial, card required. Cancel anytime. https://fivesocket.com/pricing
 
 > The server runs at the URLs above, so there is nothing to install or build to use it from an assistant. This repository holds client configs for every MCP client and small, runnable examples that call the same accounts from your own code over the REST API.
 
