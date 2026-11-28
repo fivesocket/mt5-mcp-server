@@ -1,10 +1,10 @@
-# MT5 MCP Server: connect MetaTrader 5 to Claude, ChatGPT and Cursor
+# MT5 MCP Server: connect MetaTrader 5 to Claude, ChatGPT, Cursor and Kiro
 
 [![FiveSocket MT5 MCP connector](https://glama.ai/mcp/connectors/com.fivesocket/mt5/badges/score.svg)](https://glama.ai/mcp/connectors/com.fivesocket/mt5)
 
-**FiveSocket is a hosted MT5 MCP server.** Link your MetaTrader 5 account once in the browser, then ask Claude, ChatGPT, Cursor or any MCP client about your balance, positions, trade history and charts. With your permission, it can also place trades.
+**FiveSocket is a hosted MT5 MCP server.** Link your MetaTrader 5 account once in the browser, then ask Claude, ChatGPT, Cursor or any MCP client about your balance, positions, trade history and charts. It runs backtests on your broker's own candles, and for FTMO, FundedNext and The5ers accounts an order guard checks every order placed through FiveSocket against the daily loss and maximum loss limits. With your permission, it can also place trades.
 
-No Windows PC, no VPS, no MT5 terminal left running, no Python, and no broker password in a config file.
+It works without a Windows PC, VPS or open MT5 terminal, unlike MetaTrader 5's built-in MCP, which runs inside the desktop terminal and needs it open. No Python, and no broker password in a config file.
 
 - **Server URL:** `https://api.fivesocket.com/mcp`
 - **Read-only server URL:** `https://api.fivesocket.com/mcp/read`
@@ -29,7 +29,7 @@ Add `--read-only` for account data only. Source: [`npm/`](npm) and [`python/`](p
 
 | Path | What it is |
 |---|---|
-| [`configs/`](configs) | MCP configs for Claude Code, Cursor and VS Code, full access and read-only |
+| [`configs/`](configs) | MCP configs for Claude Code, Cursor, VS Code and Kiro, full access and read-only |
 | [`examples/python/`](examples/python) | Python client (standard library only), plus scripts to read an account and place an order |
 | [`examples/typescript/`](examples/typescript) | TypeScript client using `fetch`, runnable with Node 22.18+ or Bun, no dependencies |
 | [`examples/curl/`](examples/curl) | Shell scripts: read an account, place an order, and walk the MCP OAuth discovery |
@@ -55,6 +55,10 @@ A longer comparison: https://fivesocket.com/mt5-mcp-server-comparison
 2. Add the server to your assistant using one of the guides below.
 3. Sign in and approve what the assistant may do: see your accounts, read account data, and (only if you allow it) trade.
 4. Ask: "What's my balance?"
+
+### Try it on the demo account
+
+To try it before linking your own account, sign up at https://app.fivesocket.com, open https://app.fivesocket.com/demo and turn the demo on. Your assistant can then read a read-only demo account with the id `demo`: balance, positions, history, candles, symbols and backtests. Trading on it is refused. Then link your own MT5 demo account to see live data from your broker.
 
 ### Claude (claude.ai, Claude Desktop, iPhone and Android)
 
@@ -124,6 +128,27 @@ Add this to `.vscode/mcp.json` (also in [`configs/vscode.json`](configs/vscode.j
 Read-only: [`configs/vscode-read-only.json`](configs/vscode-read-only.json).
 
 Guide for Cursor and VS Code: https://fivesocket.com/connect-mt5-to-cursor
+
+### Kiro
+
+Read-only: [![Add to Kiro](https://kiro.dev/images/add-to-kiro.svg)](https://kiro.dev/launch/mcp/add?name=fivesocket-read&config=%7B%22url%22%3A%22https%3A%2F%2Fapi.fivesocket.com%2Fmcp%2Fread%22%2C%22oauthScopes%22%3A%5B%22accounts%3Aread%22%2C%22data%3Aread%22%5D%2C%22disabled%22%3Afalse%2C%22autoApprove%22%3A%5B%5D%7D)
+
+With trading: [![Add to Kiro](https://kiro.dev/images/add-to-kiro.svg)](https://kiro.dev/launch/mcp/add?name=fivesocket&config=%7B%22url%22%3A%22https%3A%2F%2Fapi.fivesocket.com%2Fmcp%22%2C%22oauthScopes%22%3A%5B%22accounts%3Aread%22%2C%22data%3Aread%22%2C%22trading%3Aexecute%22%5D%2C%22disabled%22%3Afalse%2C%22autoApprove%22%3A%5B%5D%7D)
+
+Or add this to `~/.kiro/settings/mcp.json` (also in [`configs/kiro-read-only.json`](configs/kiro-read-only.json); with trading: [`configs/kiro.json`](configs/kiro.json)):
+
+```json
+{
+  "mcpServers": {
+    "fivesocket-read": {
+      "url": "https://api.fivesocket.com/mcp/read",
+      "oauthScopes": ["accounts:read", "data:read"]
+    }
+  }
+}
+```
+
+Kiro opens the FiveSocket sign-in in your browser the first time it connects, in Kiro IDE and Kiro CLI. Keep `oauthScopes`: without it Kiro asks for `openid email profile offline_access`, which FiveSocket does not issue.
 
 ### Any other MCP client
 
@@ -206,9 +231,11 @@ Errors share one envelope, `{"error": {"code", "message", "requestId"}}`. `202 a
 - Documentation: https://docs.fivesocket.com
 - Official MCP Registry: `com.fivesocket/mt5`
 - Support: hello@fivesocket.com, or open an issue in this repository
+- Privacy policy: https://fivesocket.com/privacy
+- Terms: https://fivesocket.com/terms
 
 ## License
 
-The configs and examples in this repository are released under the [MIT License](LICENSE). The FiveSocket service is a hosted product with its own terms: https://fivesocket.com
+The configs and examples in this repository are released under the [MIT License](LICENSE). The FiveSocket service is a hosted product with its own [terms](https://fivesocket.com/terms) and [privacy policy](https://fivesocket.com/privacy).
 
 FiveSocket is not affiliated with MetaQuotes. MetaTrader 5 is a trademark of MetaQuotes Ltd.

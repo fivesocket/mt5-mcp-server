@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fivesocket": {
+      "url": "https://api.fivesocket.com/mcp",
+      "oauthScopes": [
+        "accounts:read",
+        "data:read",
+        "trading:execute"
+      ]
+    }
+  }
+}

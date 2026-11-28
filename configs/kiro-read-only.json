@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "fivesocket-read": {
+      "url": "https://api.fivesocket.com/mcp/read",
+      "oauthScopes": [
+        "accounts:read",
+        "data:read"
+      ]
+    }
+  }
+}
